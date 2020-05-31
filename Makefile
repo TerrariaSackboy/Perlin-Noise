@@ -1,10 +1,11 @@
 SHELL = /bin/bash
 CXX = g++
-CFLAGS = -Werror -Wextra -ggdb
+CFLAGS = -Wall -Wextra -ggdb
 SDIR = src
 BDIR = build
 
-_obj0 = main.o
+_obj0 = noise.o
+_obj1 = main.o
 _obj = $(_obj0)
 obj = $(patsubst %,$(BDIR)/%,$(_obj))
 
