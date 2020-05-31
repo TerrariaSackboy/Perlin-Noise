@@ -6,7 +6,7 @@ BDIR = build
 
 _obj0 = noise.o
 _obj1 = main.o
-_obj = $(_obj0)
+_obj = $(_obj0) $(_obj1)
 obj = $(patsubst %,$(BDIR)/%,$(_obj))
 
 $(BDIR)/%.o: $(SDIR)/%.cpp
