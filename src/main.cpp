@@ -4,10 +4,10 @@
 
 const char* argument_description =
 "\
-\tcells x (int): how many cells wide the noise is\n\
-\tcells y (int): how many cells high the noise is\n\
 \tcell w (int): the width of each individual cell\n\
 \tcell h (int): the height of each individual cell\n\
+\tcells x (int): how many cells wide the noise is\n\
+\tcells y (int): how many cells high the noise is\n\
 \tseed (int): seed of the noise; defaults to 0\n\
 \tout (string): path to the output image; defaults to noise.png\n";
 
@@ -17,7 +17,7 @@ int main(int argc, char* argv[])
 	// TODO: make it less gross
 	if (argc < 5)
 	{
-		printf("Usage: perlin-noise x y w h [s] [o]\n");
+		printf("Usage: perlin-noise w h x y [s] [o]\n");
 		printf("%s", argument_description);
 		return 1;
 	}
