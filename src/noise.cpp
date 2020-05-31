@@ -1,4 +1,7 @@
+#include <cmath>
+#include <random>
 #include "noise.hpp"
+#include "vector2.hpp"
 
 // This is, of course, fine -- after all, no sane person would include a .cpp file
 using namespace trsb;
@@ -39,6 +42,30 @@ float* NoiseGenerator::GetNoise()
 
 void NoiseGenerator::GenerateNoise()
 {
+	for (int cell_x = 0; cell_x < cells_x; cell_x++)
+	{
+		for (int cell_y = 0; cell_y < cells_y; cell_y++)
+		{
+			int offset_x = cell_x * cell_width;
+			int offset_y = cell_y * cell_height;
 
+			// TODO: Possibly don't use the c random function
+			double angle = (rand() / (double)RAND_MAX) * 2 * M_PI;
+			Vector2 angle_vector(cos(angle), sin(angle));
+
+			for (int x = 0; x < cell_width; x++)
+			{	
+				for (int y = 0; y < cell_width; y++)
+				{
+					// Convert the local (x,y) position into a Vector2
+					Vector2 position((double)x / (cell_width - 1) - 0.5,
+							(double)y / (cell_width - 1) - 0.5);
+					
+					noise[offset_x+x + width * (offset_y+y)] =
+							(float) angle_vector.Dot(position) * position.Magnitude();
+				}
+			}
+		}
+	}
 }
 
