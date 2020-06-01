@@ -56,7 +56,7 @@ int main(int argc, char* argv[])
 
 	srand(params[4]);
 
-	trsb::NoiseGenerator generator(params[0],params[1],   params[2],params[3]);
+	trsb::NoiseGenerator generator(params[0],params[1],   params[3],params[2]);
 	generator.GenerateNoise();
 
 	// Convert generator's noise output to image data
