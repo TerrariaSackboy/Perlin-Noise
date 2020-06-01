@@ -1,4 +1,5 @@
 #include <cmath>
+#include <algorithm>
 #include <random>
 #include "noise.hpp"
 #include "vector2.hpp"
@@ -60,10 +61,13 @@ void NoiseGenerator::GenerateNoise()
 					// Convert the local (x,y) position into a Vector2
 					Vector2 position((double)x / (cell_width - 1) - 0.5,
 							(double)y / (cell_width - 1) - 0.5);
-					
-					noise[offset_x+x + width * (offset_y+y)] =
-							(float) angle_vector.Dot(position) * position.Magnitude();
+					float value = angle_vector.Dot(position) * position.Magnitude();
+					value = value + 0.5;
+					value = std::max(std::min(value, 1.0f), 0.0f);
+
+					noise[offset_x+x + width * (offset_y+y)] = value;
 				}
+
 			}
 		}
 	}
