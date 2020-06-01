@@ -1,6 +1,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include "noise.hpp"
+#include "lodepng.h"
 
 const char* argument_description =
 "\
@@ -57,6 +58,28 @@ int main(int argc, char* argv[])
 
 	trsb::NoiseGenerator generator(params[0],params[1],   params[2],params[3]);
 	generator.GenerateNoise();
+
+	// Convert generator's noise output to image data
+	int width = generator.GetWidth();
+	int height = generator.GetHeight();
+	float* noise = generator.GetNoise();
+
+	unsigned char* image = new unsigned char[width * height];
+
+	for (int x = 0; x < width; x++)
+	{
+		for (int y = 0; y < height; y++)
+		{
+			float value = noise[x + width*y];
+			unsigned char char_value = (unsigned char)(value * 255);
+			image[x + width*y] = char_value; 
+		}
+	}
+	
+	// Output the image data
+	unsigned error = lodepng_encode_file(path,
+			image, width, height,
+			LodePNGColorType.LCT_GREY, 8);
 
 	return 0;
 }

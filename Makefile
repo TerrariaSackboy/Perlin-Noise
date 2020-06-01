@@ -3,6 +3,11 @@ CXX = g++
 CFLAGS = -Wall -Wextra -ggdb
 SDIR = src
 BDIR = build
+LODEPNG_DIR = lodepng
+
+project_path = $(shell pwd)
+
+CFLAGS += -I$(project_path)/$(LODEPNG_DIR)
 
 _obj0 = vector2.o
 _obj1 = noise.o
@@ -13,8 +18,11 @@ obj = $(patsubst %,$(BDIR)/%,$(_obj))
 $(BDIR)/%.o: $(SDIR)/%.cpp
 	$(CXX) -c -o $@ $< $(CFLAGS)
 
-perlin-noise: $(obj)
+perlin-noise: $(obj) $(BDIR)/lodepng.o
 	$(CXX) -o $@ $^ $(CFLAGS)
+
+$(BDIR)/lodepng.o: $(LODEPNG_DIR)/lodepng.cpp
+	$(CXX) -c -o $@ $^ $(CFLAGS)
 
 .PHONY: clean
 clean:
